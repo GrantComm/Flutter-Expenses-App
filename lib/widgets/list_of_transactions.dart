@@ -3,23 +3,26 @@ import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
+  final Function deleteTx; 
   final List<Transaction> transactions;
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.deleteTx);
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 400,
       child: transactions.isEmpty
           ? Column(
               children: <Widget>[
                 Text("No Transactions Added"),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
-                  height: 200,
+                    height: 200,
                     child: Image.asset(
-                  'images/waiting.png',
-                  fit: BoxFit.cover,
-                ))
+                      'images/waiting.png',
+                      fit: BoxFit.cover,
+                    ))
               ],
             )
           : ListView.builder(
@@ -61,6 +64,16 @@ class TransactionList extends StatelessWidget {
                             ),
                           )
                         ],
+                      ),
+                      Expanded(
+                        child: Container(
+                          child: IconButton(
+                            icon: Icon(Icons.delete, color: Colors.orange,),
+                            onPressed: () {
+                              deleteTx(transactions[index].id); 
+                            },
+                          ),
+                        ),
                       )
                     ],
                   ),

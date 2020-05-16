@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
           ],
         ),
       ),
@@ -82,6 +82,12 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       _userTransactions.add(newTx);
+    });
+  }
+
+  void _deleteTransaction(String id){
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id); 
     });
   }
 
