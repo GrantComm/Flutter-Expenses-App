@@ -35,30 +35,40 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Expenses",
-          style: TextStyle(color: Colors.orange),
-        ),
-        backgroundColor: Colors.blueGrey,
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            color: Colors.orange,
-            onPressed: () {
-              _startNewTransaction(context);
-            },
-          )
-        ],
+    final appBar = AppBar(
+      title: Text(
+        "Expenses",
+        style: TextStyle(color: Colors.orange),
       ),
+      backgroundColor: Colors.blueGrey,
+      centerTitle: true,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          color: Colors.orange,
+          onPressed: () {
+            _startNewTransaction(context);
+          },
+        )
+      ],
+    );
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(_userTransactions, _deleteTransaction),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height - MediaQuery.of(context).padding.top) *
+                    0.3,
+                child: Chart(_recentTransactions)),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height - MediaQuery.of(context).padding.top) *
+                    0.7,
+                child: TransactionList(_userTransactions, _deleteTransaction)),
           ],
         ),
       ),
@@ -85,9 +95,9 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _deleteTransaction(String id){
+  void _deleteTransaction(String id) {
     setState(() {
-      _userTransactions.removeWhere((tx) => tx.id == id); 
+      _userTransactions.removeWhere((tx) => tx.id == id);
     });
   }
 
